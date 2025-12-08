@@ -96,8 +96,9 @@ Fitur-fitur utama seperti kontrol melalui WiFi dan Bluetooth, replay jalur, dan 
 6. "Module 6 - Bluetooth & BLE," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-6-bluetooth-ble (Accessed: Dec. 7, 2025).
 7. "Module 7 - MQTT, HTTP, WIFI," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-7-mqtt-http-wifi (Accessed: Dec. 7, 2025).
 8. "Module 8 - Power Management," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-8-power-management (Accessed: Dec. 7, 2025).
-9. "Bluetooth® Low Energy (Bluetooth LE)," esspresif. [Online]. Available: https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/bluetooth/bt_le.html (Accessed: Dec. 7, 2025).
-10. "Bluetooth® Architecture," esspresif. [Online]. Available: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/bt-architecture/index.html (Accessed: Dec. 7, 2025).
+9. Instructables, “DIY ESP32 Wifi Self Balancing Robot - B-Robot ESP32 Arduino Programing,” Instructables, Sep. 19, 2021. [Online]. Available: https://www.instructables.com/DIY-ESP32-Wifi-Self-Balancing-Robot-B-Robot-ESP32-/ (Accessed: Dec. 7, 2025).
+10. "Bluetooth® Low Energy (Bluetooth LE)," esspresif. [Online]. Available: https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/bluetooth/bt_le.html (Accessed: Dec. 7, 2025).
+11. "Bluetooth® Architecture," esspresif. [Online]. Available: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/bt-architecture/index.html (Accessed: Dec. 7, 2025).
 
 ---
 
