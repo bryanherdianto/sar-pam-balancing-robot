@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Robot - WiFi Control</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            touch-action: manipulation;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .back-btn {
+            color: #00d9ff;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            color: #00d9ff;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .status-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ff4444;
+        }
+
+        .status-dot.connected {
+            background: #00ff88;
+            box-shadow: 0 0 10px #00ff88;
+        }
+
+        .control-panel {
+            margin-top: 30px;
+        }
+
+        .joystick-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .joystick {
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            position: relative;
+            touch-action: none;
+        }
+
+        .joystick-knob {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #00d9ff, #0099cc);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
+            transition: transform 0.1s;
+        }
+
+        .joystick-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+
+        .direction-labels {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .direction-labels span {
+            position: absolute;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .dir-up {
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .dir-down {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .dir-left {
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .dir-right {
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 300px;
+            margin: 30px auto;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .btn:hover {
+            background: rgba(0, 217, 255, 0.2);
+            border-color: #00d9ff;
+        }
+
+        .btn:active,
+        .btn.active {
+            background: #00d9ff;
+            transform: scale(0.95);
+        }
+
+        .btn-up {
+            grid-column: 2;
+        }
+
+        .btn-left {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .btn-stop {
+            grid-column: 2;
+            grid-row: 2;
+            background: #ff4444;
+            border-color: #ff4444;
+        }
+
+        .btn-right {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .btn-down {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        .telemetry {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .telemetry h3 {
+            margin-bottom: 15px;
+            color: #00d9ff;
+            font-size: 1em;
+        }
+
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+
+        .telemetry-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .telemetry-label {
+            color: #888;
+            font-size: 0.8em;
+        }
+
+        .command-log {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 0.9em;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .command-log p {
+            color: #00ff88;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <a href="/" class="back-btn">Back</a>
+            <h1>WiFi Control</h1>
+            <div></div>
+        </header>
+
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-dot" id="connectionStatus"></div>
+                <span id="connectionText">Connecting...</span>
+            </div>
+            <div class="status-item">
+                <span>Command: </span>
+                <strong id="currentCommand">STOP</strong>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <!-- D-Pad Buttons -->
+            <div class="buttons">
+                <button class="btn btn-up" data-cmd="forward">▲</button>
+                <button class="btn btn-left" data-cmd="left">◄</button>
+                <button class="btn btn-stop" data-cmd="stop">■</button>
+                <button class="btn btn-right" data-cmd="right">►</button>
+                <button class="btn btn-down" data-cmd="backward">▼</button>
+            </div>
+        </div>
+
+        <div class="telemetry">
+            <h3>Telemetry</h3>
+            <div class="telemetry-grid">
+                <div>
+                    <div class="telemetry-value" id="angleValue">--</div>
+                    <div class="telemetry-label">Angle (°)</div>
+                </div>
+                <div>
+                    <div class="telemetry-value" id="outputValue">--</div>
+                    <div class="telemetry-label">Output</div>
+                </div>
+                <div>
+                    <div class="telemetry-value" id="setpointValue">--</div>
+                    <div class="telemetry-label">Setpoint</div>
+                </div>
+            </div>
+
+            <div class="command-log" id="commandLog">
+                <p>Ready to send commands...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isConnected = false;
+
+        // Send command to robot
+        async function sendCommand(cmd) {
+            document.getElementById('currentCommand').textContent = cmd.toUpperCase();
+
+            // Log command
+            const log = document.getElementById('commandLog');
+            const time = new Date().toLocaleTimeString();
+            log.innerHTML = `<p>[${time}] Sending: ${cmd}</p>` + log.innerHTML;
+            if (log.children.length > 10) {
+                log.removeChild(log.lastChild);
+            }
+
+            try {
+                const response = await fetch('/api/command', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command: cmd, speed: 200 })
+                });
+
+                const data = await response.json();
+                if (data.error) {
+                    console.error('Command error:', data.error);
+                }
+            } catch (err) {
+                console.error('Failed to send command:', err);
+            }
+        }
+
+        // Setup button controls
+        document.querySelectorAll('.btn').forEach(btn => {
+            const cmd = btn.dataset.cmd;
+
+            // Mouse events
+            btn.addEventListener('mousedown', () => {
+                btn.classList.add('active');
+                sendCommand(cmd);
+            });
+
+            btn.addEventListener('mouseup', () => {
+                btn.classList.remove('active');
+                if (cmd !== 'stop') {
+                    sendCommand('stop');
+                }
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                if (btn.classList.contains('active')) {
+                    btn.classList.remove('active');
+                    if (cmd !== 'stop') {
+                        sendCommand('stop');
+                    }
+                }
+            });
+
+            // Touch events
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                btn.classList.add('active');
+                sendCommand(cmd);
+            });
+
+            btn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                btn.classList.remove('active');
+                if (cmd !== 'stop') {
+                    sendCommand('stop');
+                }
+            });
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.repeat) return;
+
+            switch (e.key) {
+                case 'ArrowUp':
+                case 'w':
+                case 'W':
+                    sendCommand('forward');
+                    document.querySelector('.btn-up').classList.add('active');
+                    break;
+                case 'ArrowDown':
+                case 's':
+                case 'S':
+                    sendCommand('backward');
+                    document.querySelector('.btn-down').classList.add('active');
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                case 'A':
+                    sendCommand('left');
+                    document.querySelector('.btn-left').classList.add('active');
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                case 'D':
+                    sendCommand('right');
+                    document.querySelector('.btn-right').classList.add('active');
+                    break;
+                case ' ':
+                    sendCommand('stop');
+                    document.querySelector('.btn-stop').classList.add('active');
+                    break;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 'a', 'A', 's', 'S', 'd', 'D'].includes(e.key)) {
+                sendCommand('stop');
+            }
+        });
+
+        // Update telemetry
+        function updateTelemetry() {
+            fetch('/api/telemetry')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.error) {
+                        document.getElementById('angleValue').textContent =
+                            data.angle ? data.angle.toFixed(1) : '--';
+                        document.getElementById('outputValue').textContent =
+                            data.output ? data.output.toFixed(0) : '--';
+                        document.getElementById('setpointValue').textContent =
+                            data.setpoint ? data.setpoint.toFixed(1) : '--';
+                    }
+                })
+                .catch(err => console.log('Telemetry error:', err));
+        }
+
+        // Update connection status
+        function updateStatus() {
+            fetch('/api/status')
+                .then(response => response.json())
+                .then(data => {
+                    const statusDot = document.getElementById('connectionStatus');
+                    const statusText = document.getElementById('connectionText');
+
+                    if (!data.error) {
+                        statusDot.classList.add('connected');
+                        statusText.textContent = 'Connected';
+                        isConnected = true;
+                    } else {
+                        statusDot.classList.remove('connected');
+                        statusText.textContent = 'Disconnected';
+                        isConnected = false;
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('connectionStatus').classList.remove('connected');
+                    document.getElementById('connectionText').textContent = 'Disconnected';
+                    isConnected = false;
+                });
+        }
+
+        // Start updates
+        updateStatus();
+        updateTelemetry();
+        setInterval(updateStatus, 2000);
+        setInterval(updateTelemetry, 200);
+    </script>
+</body>
+
+</html>

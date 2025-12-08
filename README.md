@@ -1,7 +1,7 @@
-# SaR-PaM  
-### Self-Balancing Robot with Path Memorization  
+# SaR-PaM (Self-Balancing Robot with Path Memorization)
+
 **Real-Time System and Internet of Things Final Project**  
-Department of Electrical Engineering — Universitas Indonesia  
+Department of Electrical Engineering, Universitas Indonesia  
 
 ---
 
@@ -10,6 +10,7 @@ Department of Electrical Engineering — Universitas Indonesia
 SaR-PaM (Self-Balancing Robot with Path Memorization) adalah robot dua roda berbasis **ESP32** yang dirancang untuk menjaga keseimbangan secara real-time menggunakan **sensor IMU** dan **algoritma PID**. Selain itu, robot ini dibangun untuk mampu merekam jalur pergerakan serta mengulang kembali jalur tersebut (path memorization).
 
 Sistem juga mendukung dua metode komunikasi:
+
 - **WiFi (WebSocket)** — kontrol jarak jauh dan telemetry
 - **Bluetooth** — kontrol jarak dekat dengan latensi rendah
 
@@ -20,6 +21,7 @@ Keseluruhan proses berjalan dengan arsitektur **FreeRTOS multitasking**, sehingg
 ## Implementation
 
 ### Hardware Components
+
 - ESP32 microcontroller  
 - IMU sensor (gyroscope + accelerometer)  
 - Dual DC motor with motor driver  
@@ -27,6 +29,7 @@ Keseluruhan proses berjalan dengan arsitektur **FreeRTOS multitasking**, sehingg
 - Battery pack (Li-ion / Li-Po)  
 
 ### Software Architecture
+
 Software dikembangkan di **Arduino IDE**, memanfaatkan **FreeRTOS** untuk menjalankan beberapa task paralel:
 
 - **IMU Processing & PID Balancing**  
@@ -52,6 +55,7 @@ Software dikembangkan di **Arduino IDE**, memanfaatkan **FreeRTOS** untuk menjal
 ## Testing and Evaluation
 
 ### Testing Performed
+
 Pengujian dilakukan pada beberapa aspek utama:
 
 1. **Balancing Test**  
@@ -70,6 +74,7 @@ Pengujian dilakukan pada beberapa aspek utama:
    Mencatat perubahan konsumsi daya ketika modul komunikasi dimatikan.
 
 ### Evaluation Summary
+
 - Robot berhasil menjaga **keseimbangan stabil** menggunakan IMU + PID.  
 - Kontrol **WiFi** berjalan responsif dan mendukung telemetry real-time.  
 - Kontrol **Bluetooth** memberikan latensi paling rendah untuk kendali dekat.  
@@ -88,17 +93,14 @@ Fitur-fitur utama seperti kontrol melalui WiFi dan Bluetooth, replay jalur, dan 
 
 ## References
 
-1. "Module 1 - Introduction to SMP with RTOS," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-1-introduction-to-smp-with-rtos (Accessed: Dec. 7, 2025).
-2. "Module 2 - Task Management," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-2-task-management (Accessed: Dec. 7, 2025).
-3. "Module 3 - Memory Management & Queue," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-3-memory-management-queue (Accessed: Dec. 7, 2025).
-4. "Module 4 - Deadlock & Synchronization," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-4-deadlock-synchronization (Accessed: Dec. 7, 2025).
-5. "Module 5 - Software Timer," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-5-software-timer (Accessed: Dec. 7, 2025).
-6. "Module 6 - Bluetooth & BLE," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-6-bluetooth-ble (Accessed: Dec. 7, 2025).
-7. "Module 7 - MQTT, HTTP, WIFI," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-7-mqtt-http-wifi (Accessed: Dec. 7, 2025).
-8. "Module 8 - Power Management," digilabdte. [Online]. Available: https://learn.digilabdte.com/books/internet-of-things/chapter/module-8-power-management (Accessed: Dec. 7, 2025).
-9. Instructables, “DIY ESP32 Wifi Self Balancing Robot - B-Robot ESP32 Arduino Programing,” Instructables, Sep. 19, 2021. [Online]. Available: https://www.instructables.com/DIY-ESP32-Wifi-Self-Balancing-Robot-B-Robot-ESP32-/ (Accessed: Dec. 7, 2025).
-10. "Bluetooth® Low Energy (Bluetooth LE)," esspresif. [Online]. Available: https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/bluetooth/bt_le.html (Accessed: Dec. 7, 2025).
-11. "Bluetooth® Architecture," esspresif. [Online]. Available: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/bt-architecture/index.html (Accessed: Dec. 7, 2025).
-
----
-
+1. "Module 1 - Introduction to SMP with RTOS," digilabdte. [Online]. Available: <https://learn.digilabdte.com/books/internet-of-things/chapter/module-1-introduction-to-smp-with-rtos> (Accessed: Dec. 7, 2025).
+2. "Module 2 - Task Management," digilabdte. [Online]. Available: <https://learn.digilabdte.com/books/internet-of-things/chapter/module-2-task-management> (Accessed: Dec. 7, 2025).
+3. "Module 3 - Memory Management & Queue," digilabdte. [Online]. Available: <https://learn.digilabdte.com/books/internet-of-things/chapter/module-3-memory-management-queue> (Accessed: Dec. 7, 2025).
+4. "Module 4 - Deadlock & Synchronization," digilabdte. [Online]. Available: <https://learn.digilabdte.com/books/internet-of-things/chapter/module-4-deadlock-synchronization> (Accessed: Dec. 7, 2025).
+5. "Module 5 - Software Timer," digilabdte. [Online]. Available: <https://learn.digilabdte.com/books/internet-of-things/chapter/module-5-software-timer> (Accessed: Dec. 7, 2025).
+6. "Module 6 - Bluetooth & BLE," digilabdte. [Online]. Available: <https://learn.digilabdte.com/books/internet-of-things/chapter/module-6-bluetooth-ble> (Accessed: Dec. 7, 2025).
+7. "Module 7 - MQTT, HTTP, WIFI," digilabdte. [Online]. Available: <https://learn.digilabdte.com/books/internet-of-things/chapter/module-7-mqtt-http-wifi> (Accessed: Dec. 7, 2025).
+8. "Module 8 - Power Management," digilabdte. [Online]. Available: <https://learn.digilabdte.com/books/internet-of-things/chapter/module-8-power-management> (Accessed: Dec. 7, 2025).
+9. Instructables, “DIY ESP32 Wifi Self Balancing Robot - B-Robot ESP32 Arduino Programing,” Instructables, Sep. 19, 2021. [Online]. Available: <https://www.instructables.com/DIY-ESP32-Wifi-Self-Balancing-Robot-B-Robot-ESP32-/> (Accessed: Dec. 7, 2025).
+10. "Bluetooth® Low Energy (Bluetooth LE)," espressif. [Online]. Available: <https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/bluetooth/bt_le.html> (Accessed: Dec. 7, 2025).
+11. "Bluetooth® Architecture," espressif. [Online]. Available: <https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/bt-architecture/index.html> (Accessed: Dec. 7, 2025).
