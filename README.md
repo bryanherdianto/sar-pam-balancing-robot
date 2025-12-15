@@ -1,6 +1,6 @@
 # SaR-PaM (Self-Balancing Robot with Path Memorization)
 
-**Real-Time System and Internet of Things Final Project**  
+**Real-Time System and Internet of Things Final Project**  
 Department of Electrical Engineering, Universitas Indonesia  
 
 ---
