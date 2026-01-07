@@ -60,15 +60,15 @@ You can see the simulation of the robot balancing from this link here: <https://
 
 ### Testing Performed
 
-Pengujian dilakukan untuk memvalidasi integrasi hardware dan software:
+Testing was conducted to validate hardware and software integration:
 
-1. **Balancing Stability Test**
+1. **Balancing Stability Test**  
     Testing the robot's ability to stand still and respond to external disturbances (light pushes).
-2. **Communication Latency Test**
+2. **Communication Latency Test**  
     Measuring the robot's responsiveness to commands from the Website Controller via WebSocket.
-3. **Path Replay Accuracy**
+3. **Path Replay Accuracy**  
     Verifying if the robot can correctly repeat the recorded movement sequence (Forward -> Turn -> Backward).
-4. **Power Management (Safety) Test**
+4. **Power Management (Safety) Test**  
     Ensuring motors automatically shut off and the ESP32 enters *Light Sleep* mode when the robot falls, and can be woken up again using the BOOT button.
 
 ### Evaluation Summary
