@@ -2,6 +2,15 @@
 
 ![Project Banner](https://i.imgur.com/aur2KEg.jpeg)  
 
+<p align="center">
+ <img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
+ <img src="https://img.shields.io/badge/Arduino-00979D?style=for-the-badge&logo=arduino&logoColor=white" />
+ <img src="https://img.shields.io/badge/ESP32-E7352C?style=for-the-badge&logo=espressif&logoColor=white" />
+ <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+ <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
+ <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
+</p>
+
 ## Introduction
 
 SaR-PaM (Self-Balancing Robot with Path Memorization) is a two-wheeled robot based on the **ESP32 DevKit V1** designed to maintain real-time balance using the **MPU6050 sensor** and **PID algorithm**. This project implements a **Dual-Core FreeRTOS** architecture, where the balancing process is separated from the communication process to ensure maximum stability.
